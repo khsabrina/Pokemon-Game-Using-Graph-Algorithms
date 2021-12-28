@@ -65,6 +65,8 @@ public class Agent {
     public geoLocation getLocation() {
         return this.pos;
     }
+
+
 }
 
 
