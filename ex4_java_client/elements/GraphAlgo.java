@@ -1,9 +1,8 @@
-package ex4_java_client.ex4_java_client;
+package ex4_java_client.elements;
 
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.*;
 
 import java.io.PrintWriter;
 import java.util.*;
@@ -19,7 +18,7 @@ public class GraphAlgo {
         this.graph = new Graph();
         while (ourNodes.hasNext()) {
             Node grNode = ourNodes.next();
-            this.graph.addNode(new Node(grNode.getKey(), new GeoLocation(grNode.getLocation().x(), grNode.getLocation().y(), grNode.getLocation().z())));
+            this.graph.addNode(new Node(grNode.getKey(), new geoLocation(grNode.getLocation().x(), grNode.getLocation().y(), grNode.getLocation().z())));
         }
         while (ourEdges.hasNext()) {
             Edge grEdge = ourEdges.next();
@@ -50,7 +49,7 @@ public class GraphAlgo {
         this.graph = new Graph();
         while (ourNodes.hasNext()) {
             Node grNode = ourNodes.next();
-            this.graph.addNode(new Node(grNode.getKey(), new GeoLocation(grNode.getLocation().x(), grNode.getLocation().y(), grNode.getLocation().z())));
+            this.graph.addNode(new Node(grNode.getKey(), new geoLocation(grNode.getLocation().x(), grNode.getLocation().y(), grNode.getLocation().z())));
         }
         while (ourEdges.hasNext()) {
             Edge grEdge = ourEdges.next();
@@ -70,7 +69,7 @@ public class GraphAlgo {
         Iterator<Node> it = this.graph.nodeIter();
         while (it.hasNext()) {
             Node node = it.next();
-            Node k = new Node(node.getKey(), (GeoLocation) node.getLocation());
+            Node k = new Node(node.getKey(), (geoLocation) node.getLocation());
             here.addNode(k);
         }
         Iterator<Node> it2 = this.graph.nodeIter();

@@ -1,8 +1,8 @@
-package ex4_java_client.ex4_java_client;
+package ex4_java_client.elements;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import java.io.FileReader;
+
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -18,7 +18,7 @@ public class Graph {
         this.Edges = new HashMap<Integer, HashMap<Integer, Edge>>();
         this.toMe = new HashMap<Integer, HashMap<Integer, Integer>>();
         // parsing file "JSONExample.json"
-        Object obj = new JSONParser().parse(new FileReader(json));
+        Object obj = new JSONParser().parse(json);
         // typecasting obj to JSONObject
         JSONObject jo = (JSONObject) obj;
         // getting Nodes
@@ -36,7 +36,7 @@ public class Graph {
             String n = (String) data[0];
             String[] split = n.split(",");
             Double[] loc = new Double[]{Double.parseDouble(split[0]), Double.parseDouble(split[1]), Double.parseDouble(split[2])};
-            Node node = new Node((Integer) data[2], new GeoLocation(loc[0], loc[1], loc[2]));
+            Node node = new Node((Integer) data[2], new geoLocation(loc[0], loc[1], loc[2]));
             addNode(node);
         }
         ja = (JSONArray) jo.get("Edges");
@@ -54,34 +54,46 @@ public class Graph {
         }
     }
 
-    public Graph(int n){
-        this.Nodes = new HashMap<Integer, Node>();
-        this.Edges = new HashMap<Integer, HashMap<Integer, Edge>>();
-        this.toMe = new HashMap<Integer,HashMap<Integer,Integer>>();
-        Random rand = new Random();
-        Random rand2 = new Random();
-
-        for (int i = 0; i < n; i++) {
-            double rand_dub1 = rand.nextDouble();
-            rand_dub1 = rand_dub1*1000;
-            rand_dub1 = rand_dub1 - 500;
-            double rand_dub2 = rand2.nextDouble();
-            rand_dub2 = rand_dub2*1000;
-            rand_dub2 = rand_dub2 - 500;
-            Node z = new Node(i, new GeoLocation(rand_dub1,rand_dub2,0.0));
-            addNode(z);
-        }
-        for (int i = 0; i < this.Nodes.size(); i++) {
-            for (int j = 0; j < 5; j++) {
-                int rand_int1 = rand.nextInt(this.Nodes.size());
-                int rand_int2 = rand.nextInt(this.Nodes.size());
-                double rand_dub1 = rand.nextDouble();
-                rand_dub1 = rand_dub1*10;
-                connect(i,rand_int2,rand_dub1);
-            }
-        }
-        this.MC= 0;
-    }
+//    public Graph(String json) throws Exception {
+//        this.Nodes = new HashMap<Integer, Node>();
+//        this.Edges = new HashMap<Integer, HashMap<Integer, Edge>>();
+//        this.toMe = new HashMap<Integer, HashMap<Integer, Integer>>();
+//        // parsing file "JSONExample.json"
+//        Object obj = new JSONParser().parse(json);
+//        // typecasting obj to JSONObject
+//        JSONObject jo = (JSONObject) obj;
+//        // getting Nodes
+//        JSONArray ja = (JSONArray) jo.get("Nodes");
+//        Iterator nodeIterator = ja.iterator();
+//        while (nodeIterator.hasNext()) {
+//            Object[] data = new Object[3];
+//            Iterator<Map.Entry> nodeData = ((Map) nodeIterator.next()).entrySet().iterator();
+//            int i = 0;
+//            while (nodeData.hasNext()) {
+//                data[i] = nodeData.next().getValue();
+//                i++;
+//            }
+//            data[2] = ((Long) data[1]).intValue();
+//            String n = (String) data[0];
+//            String[] split = n.split(",");
+//            Double[] loc = new Double[]{Double.parseDouble(split[0]), Double.parseDouble(split[1]), Double.parseDouble(split[2])};
+//            Node node = new Node((Integer) data[2], new GeoLocation(loc[0], loc[1], loc[2]));
+//            addNode(node);
+//        }
+//        ja = (JSONArray) jo.get("Edges");
+//        Iterator edgeIterator = ja.iterator();
+//        while (edgeIterator.hasNext()) {
+//            Object[] data = new Object[3];
+//            Iterator<Map.Entry> edgeData = ((Map) edgeIterator.next()).entrySet().iterator();
+//            int i = 0;
+//            while (edgeData.hasNext()) {
+//                data[i] = edgeData.next().getValue();
+//                i++;
+//            }
+//            connect(((Long) data[0]).intValue(), ((Long) data[2]).intValue(), (Double) data[1]);
+//            this.MC = 0;
+//        }
+//    }
 
     public Graph(){
         this.Nodes = new HashMap<Integer, Node>();
@@ -104,10 +116,7 @@ public class Graph {
     }
 
     public void addNode(Node n) {
-        if (Nodes.containsKey(n.getKey())){
-            System.out.println("this node id("+n.getKey()+") is already taken, choose another");
-        }
-        else {
+        if (!Nodes.containsKey(n.getKey())){
             Nodes.put(n.getKey(), n);
             toMe.put(n.getKey(), new HashMap<Integer, Integer>());
             this.MC++;
@@ -116,17 +125,20 @@ public class Graph {
 
     public void connect(int src, int dest, double w) {
         if (!Nodes.containsKey(src)){
-            System.out.println("there is no such "+ src+" Node");
+            return;
         }
         if (!Nodes.containsKey(dest)){
-            System.out.println("there is no such " + dest+ " Node");
+            return;
         }
         else {
             if (!Edges.containsKey(src)){
                 Edges.put(src, new HashMap<>());
             }
+            if (!toMe.containsKey(dest)){
+                toMe.put(dest, new HashMap<>());
+            }
             if (Edges.get(src).containsKey(dest)){
-                System.out.println("there is already edge between "+ src+" and "+ dest);
+                return;
             }
             else {
                 Edge edge = new Edge(src, dest, w);
@@ -271,7 +283,7 @@ public class Graph {
         }
 
     public Node removeNode(int key) {
-        Node nodi = this.Nodes.get(key);
+        Node node = this.Nodes.get(key);
         if (this.Edges.containsKey(key)) {
             for (Integer i : this.Edges.get(key).keySet()) {
                 this.toMe.get(i).remove(key);
@@ -288,26 +300,27 @@ public class Graph {
         }
         this.Nodes.remove(key);
         this.MC++;
-        return nodi;
+        return node;
     }
 
 
     public Edge removeEdge(int src, int dest) {
-        Edge edgi = this.Edges.get(src).get(dest);
+        Edge edge = this.Edges.get(src).get(dest);
         this.toMe.get(dest).remove(src);
         this.Edges.get(src).remove(dest);
         if (Edges.get(src).size()==0){
             this.Edges.remove(src);
         }
+        if (toMe.get(dest).size()==0){
+            this.toMe.remove(dest);
+        }
         this.MC++;
-        return edgi;
+        return edge;
     }
-
 
     public int nodeSize() {
             return this.Nodes.size();
         }
-
 
     public int edgeSize() {
         int counter = 0;
@@ -316,7 +329,6 @@ public class Graph {
         }
         return counter;
     }
-
 
     public int getMC() {
         return MC;

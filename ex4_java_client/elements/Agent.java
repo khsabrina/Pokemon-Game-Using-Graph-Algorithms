@@ -1,7 +1,6 @@
-package ex4_java_client.ex4_java_client;
+package ex4_java_client.elements;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 public class Agent {
@@ -36,8 +35,36 @@ public class Agent {
         return this.speed;
     }
 
+    public boolean isEmptyPath() {
+        return this.path.isEmpty();
+    }
 
+    public Queue<Integer> getPath() {
+        return path;
+    }
 
+    public void setId(int id){
+        this.id=id;
+    }
+    public void setValue(double value){
+        this.value=value;
+    }
+    public void setSrc(int src){
+        this.src=src;
+    }
+    public void setDest(int dest){
+        this.dest=dest;
+    }
+    public void setPos(geoLocation p){
+        this.pos=p;
+    }
+    public void setSpeed(double speed){
+        this.speed=speed;
+    }
 
-
+    public geoLocation getLocation() {
+        return this.pos;
+    }
 }
+
+
