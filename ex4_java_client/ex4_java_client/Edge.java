@@ -8,12 +8,12 @@ public class Edge{
     int tag;
     String info;
 
-    public Edge(int src,int dst, int tag, String info){
+    public Edge(int src,int dst){
         this.src=src;
         this.dst=dst;
         this.weight=0;
-        this.tag=tag;
-        this.info=info;
+        this.tag=-0;
+        this.info="0";
     }
 
     public Edge(int src,int dst,double weight){
