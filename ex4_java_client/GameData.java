@@ -166,15 +166,16 @@ public class GameData {
                     sort.add(a);
                 }
             }
-            for (Pokemon old : this.Pokemons){
-                boolean delete =true;
-                for(Pokemon curr: sort){
-                    if (old.equals(curr)){
-                        delete =false;
+            for (int i = this.Pokemons.size()-1;i>=0;i--) {
+                boolean delete = true;
+                Pokemon old = this.Pokemons.get(i);
+                for (Pokemon curr : sort) {
+                    if (old.equals(curr)) {
+                        delete = false;
                         break;
                     }
                 }
-                if (delete==true) {
+                if (delete == true) {
                     this.Pokemons.remove(old);
                 }
             }

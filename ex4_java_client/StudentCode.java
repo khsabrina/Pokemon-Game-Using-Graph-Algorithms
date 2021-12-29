@@ -56,7 +56,7 @@ public class StudentCode {
 
             //System.out.println(client.getAgents());
 
-            System.out.println(client.timeToEnd());
+            //System.out.println(client.timeToEnd());
 
             //Scanner keyboard = new Scanner(System.in);
             //System.out.println("enter the next dest: ");
