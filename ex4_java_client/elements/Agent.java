@@ -4,34 +4,36 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Agent {
-    int id;
-    int src;
-    int dest;
-    GeoLocation pos;
-    double speed;
-    Queue<Integer> path = new LinkedList<>();
+    private int id;
+    private double value;
+    private int src;
+    private int dest;
+    private geoLocation pos;
+    private double speed;
+    private Queue<Integer> path = new LinkedList<>();
 
-    public Agent(int id,int src,int dest, double speed,GeoLocation pos){
-        this.id=id;
-        this.src=src;
-        this.dest=dest;
-        this.speed=speed;
-        this.pos=pos;
+    public Agent(int id, double value, int src, int dest, double speed, geoLocation pos) {
+        this.id = id;
+        this.value = value;
+        this.src = src;
+        this.dest = dest;
+        this.speed = speed;
+        this.pos = pos;
     }
 
-    public int GetId(){
+    public int getId() {
         return this.id;
     }
-    public int GetSrc(){
+    public int getSrc() {
         return this.src;
     }
-    public int GetDest(){
+    public int getDest() {
         return this.dest;
     }
-    public GeoLocation GetLocation(){
+    public geoLocation GetLocation() {
         return this.pos;
     }
-    public double GetSpeed(){
+    public double getSpeed() {
         return this.speed;
     }
 
@@ -68,5 +70,3 @@ public class Agent {
 
 
 }
-
-
