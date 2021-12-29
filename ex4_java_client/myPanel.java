@@ -14,7 +14,9 @@ import java.util.Iterator;
 
 public class myPanel extends JPanel {
     GameData game;
-    private BufferedImage image;
+    private BufferedImage imageAgent;
+    private BufferedImage imagePok1;
+    private BufferedImage imagePok2;
     private double xMinNew;
     private double yMinNew;
     private double xMaxNew;
@@ -26,7 +28,10 @@ public class myPanel extends JPanel {
         scalingsize();
         this.setPreferredSize(new Dimension(900, 700));
         try {
-            image = ImageIO.read(new File("C:\\Users\\barak\\IdeaProjects\\OOP-Ex4\\ex4_java_client\\pokemonBall.png"));
+            imageAgent = ImageIO.read(new File("ex4_java_client/pokemonBall.png"));
+            imagePok1= ImageIO.read(new File("ex4_java_client/Pokemon3.png"));
+            imagePok2= ImageIO.read(new File("ex4_java_client/Pokemon2.png"));
+            //image.getScaledInstance(25,25,image.SCALE_SMOOTH);
         } catch (IOException ex) {
             System.out.println("Didn't succeed to open the image");
         }
@@ -69,6 +74,7 @@ public class myPanel extends JPanel {
             g.setColor(Color.BLACK);
             g.fillOval(getXScale(currNode.getLocation()), getYScale(currNode.getLocation()), 15, 15);//We need to do the scaling right!
             g.drawString(currNode.getKey() + "", getXScale(currNode.getLocation()), getYScale(currNode.getLocation()));
+
         }
 
         Iterator<Edge> Edges = this.game.getAlgoGraph().getGraph().edgeIter();
@@ -83,13 +89,19 @@ public class myPanel extends JPanel {
         g.setColor(Color.YELLOW);
         for (int i = 0; i < this.game.getPokemons().size(); i++) {
             Pokemon pokemon = this.game.getPokemons().get(i);
-            g.fillOval(getXScale(pokemon.getLocation()), getYScale(pokemon.getLocation()), 25, 25);
-            //g.drawImage(image, getXScale(pokemon.getLocation()),getYScale(pokemon.getLocation()),this);
+            //g.fillOval(getXScale(pokemon.getLocation()), getYScale(pokemon.getLocation()), 25, 25);
+            if(pokemon.getType()>0) {
+                g.drawImage(imagePok1, getXScale(pokemon.getLocation()) - 8, getYScale(pokemon.getLocation()) - 8, 40, 40, null);
+            }
+            else {
+                g.drawImage(imagePok2, getXScale(pokemon.getLocation()) - 8, getYScale(pokemon.getLocation()) - 8, 35, 35, null);
+            }
         }
         g.setColor(Color.BLUE);
         for (int i = 0; i < this.game.getAgents().size(); i++) {
             Agent agent = this.game.getAgents().get(i);
-            g.fillOval(getXScale(agent.getLocation()), getYScale(agent.getLocation()), 25, 25);
+            //g.fillOval(getXScale(agent.getLocation()), getYScale(agent.getLocation()), 25, 25);
+            g.drawImage(imageAgent, getXScale(agent.getLocation())-8,getYScale(agent.getLocation())-8,35,35,null);
         }
     }
 
