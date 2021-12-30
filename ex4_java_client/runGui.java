@@ -13,11 +13,13 @@ public class runGui implements ActionListener {
     private GraphAlgo graph;
     private List<Pokemon> pokemons;
     private List<Agent> agents;
+    private GameData gameData;
     JFrame frame;
     myPanel The_paint;
 
 
     public runGui(GameData game) {
+        this.gameData = game;
         this.graph = game.getAlgoGraph();
         this.pokemons = game.getPokemons();
         this.agents = game.getAgents();
@@ -53,7 +55,9 @@ public class runGui implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+//        if (e==stop){
+//            gameData.stopOrNot = true;
+//        }
     }
 
 }

@@ -11,11 +11,13 @@ public class GameData {
     private List<Pokemon> Pokemons;
     private List<Agent> Agents;
     private GraphAlgo OurGraph;
+    Boolean stopOrNot;
 
     public GameData() {
         this.OurGraph = null;
         this.Agents = new ArrayList<>();
         this.Pokemons = new ArrayList<>();
+        stopOrNot = false;
     }
 
     public GraphAlgo getAlgoGraph() {
@@ -57,12 +59,17 @@ public class GameData {
                     String s = (String) jo.get("pos");
                     String[] pos = s.split(",");
                     geoLocation loc = new geoLocation(Double.parseDouble(pos[0]), Double.parseDouble(pos[1]), Double.parseDouble(pos[2]));
-                    Agent a = this.getAgent(id);
-                    a.setDest(dest);
-                    a.setPos(loc);
-                    a.setValue(value);
-                    a.setSpeed(speed);
-                    a.setSrc(src);
+                    if (this.getAgent(id) !=null) {
+                        Agent a = this.getAgent(id);
+                        a.setDest(dest);
+                        a.setPos(loc);
+                        a.setValue(value);
+                        a.setSpeed(speed);
+                        a.setSrc(src);
+                    }
+                    else{
+                        this.Agents.add(new Agent(id,value,src,dest,speed,loc));
+                    }
 
                 }
             }
@@ -248,6 +255,4 @@ public class GameData {
         }
         this.Agents.get(agent).getPath().add(pokemon.getEdge().getDest());
     }
-
-
 }

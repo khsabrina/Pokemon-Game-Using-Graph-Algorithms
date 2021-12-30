@@ -28,10 +28,9 @@ public class myPanel extends JPanel {
         scalingsize();
         this.setPreferredSize(new Dimension(900, 700));
         try {
-            imageAgent = ImageIO.read(new File("ex4_java_client/pokemonBall.png"));
-            imagePok1= ImageIO.read(new File("ex4_java_client/Pokemon3.png"));
-            imagePok2= ImageIO.read(new File("ex4_java_client/Pokemon2.png"));
-            //image.getScaledInstance(25,25,image.SCALE_SMOOTH);
+            imageAgent = ImageIO.read(new File("ex4_java_client/images/pokemonBall.png"));
+            imagePok1= ImageIO.read(new File("ex4_java_client/images/Pokemon3.png"));
+            imagePok2= ImageIO.read(new File("ex4_java_client/images/Pokemon2.png"));
         } catch (IOException ex) {
             System.out.println("Didn't succeed to open the image");
         }
@@ -68,10 +67,9 @@ public class myPanel extends JPanel {
         super.paint(g);
         Graphics2D g1 = (Graphics2D) g;
         Iterator<Node> currIter = this.game.getAlgoGraph().getGraph().nodeIter();
-        //Drawing nodes on canvas
         while (currIter.hasNext()) {
             Node currNode = currIter.next();
-            g.setColor(Color.BLACK);
+            g.setColor(Color.BLUE);
             g.fillOval(getXScale(currNode.getLocation()), getYScale(currNode.getLocation()), 15, 15);//We need to do the scaling right!
             g.drawString(currNode.getKey() + "", getXScale(currNode.getLocation()), getYScale(currNode.getLocation()));
 
@@ -82,14 +80,13 @@ public class myPanel extends JPanel {
             Edge currEdge = Edges.next();
                 Node src = this.game.getAlgoGraph().getGraph().getNode(currEdge.getSrc());
                 Node dest = this.game.getAlgoGraph().getGraph().getNode(currEdge.getDest());
-                g.setColor(Color.RED);
+                g.setColor(Color.BLACK);
                 g.drawLine(getXScale(src.getLocation()) + 8, getYScale(src.getLocation()) + 8, getXScale(dest.getLocation()) + 8, getYScale(dest.getLocation()) + 8);
                 drawArrow(g1, getXScale(src.getLocation()) + 8, getYScale(src.getLocation()) + 8, getXScale(dest.getLocation()) + 8, getYScale(dest.getLocation()) + 8);
         }
         g.setColor(Color.YELLOW);
         for (int i = 0; i < this.game.getPokemons().size(); i++) {
             Pokemon pokemon = this.game.getPokemons().get(i);
-            //g.fillOval(getXScale(pokemon.getLocation()), getYScale(pokemon.getLocation()), 25, 25);
             if(pokemon.getType()>0) {
                 g.drawImage(imagePok1, getXScale(pokemon.getLocation()) - 8, getYScale(pokemon.getLocation()) - 8, 40, 40, null);
             }
@@ -97,7 +94,7 @@ public class myPanel extends JPanel {
                 g.drawImage(imagePok2, getXScale(pokemon.getLocation()) - 8, getYScale(pokemon.getLocation()) - 8, 35, 35, null);
             }
         }
-        g.setColor(Color.BLUE);
+        //g.setColor(Color.BLUE);
         for (int i = 0; i < this.game.getAgents().size(); i++) {
             Agent agent = this.game.getAgents().get(i);
             //g.fillOval(getXScale(agent.getLocation()), getYScale(agent.getLocation()), 25, 25);
