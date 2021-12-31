@@ -35,6 +35,7 @@ public class myPanel extends JPanel {
             System.out.println("Didn't succeed to open the image");
         }
 
+
         repaint();
     }
 
@@ -52,13 +53,17 @@ public class myPanel extends JPanel {
             yMaxNew = Math.max(node.getLocation().y(),yMaxNew);
         }
     }
-
+    public void updateWindow(int w, int h){
+        this.setPreferredSize(new Dimension(w,h));
+        scalingsize();
+        repaint();
+    }
     private int getXScale(geoLocation pos){
-        return 50+ (int) (((pos.x() - xMinNew)*800/(xMaxNew-xMinNew)));
+        return  (int) (((pos.x() - xMinNew)*800/(xMaxNew-xMinNew)));
     }
 
     private int getYScale(geoLocation pos) {
-        return 150+ (int) (((pos.y() - yMinNew)*500/(yMaxNew-yMinNew)));
+        return (int) (((pos.y() - yMinNew)*500/(yMaxNew-yMinNew)));
     }
 
     @Override

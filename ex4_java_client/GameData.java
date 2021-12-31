@@ -147,7 +147,30 @@ public class GameData {
             e.printStackTrace();
         }
     }
+    public int updateAmountAgent(String json){
+        int ans =0;
+        try {
+            // parsing file "JSONExample.json"
+            Object obj = new JSONParser().parse(json);
+            // typecasting obj to JSONObject
+            JSONObject jo = (JSONObject) obj;
+            // getting Nodes
+            Map gameServer = ((Map)jo.get("GameServer"));
+            Iterator<Map.Entry> itr1 = gameServer.entrySet().iterator();
 
+            while (itr1.hasNext()) {
+                Map.Entry pair = itr1.next();
+                if (pair.getKey().equals("agents")) {
+                    ans = (int) ((long) pair.getValue());
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ans;
+
+    }
     public void updatePkemons(String json){
         List<Pokemon> sort = new ArrayList<>();
         try {
@@ -254,5 +277,8 @@ public class GameData {
             this.Agents.get(agent).getPath().add(path.get(i).getKey());
         }
         this.Agents.get(agent).getPath().add(pokemon.getEdge().getDest());
+    }
+    public void setStop(boolean ans){
+        this.stopOrNot=ans;
     }
 }

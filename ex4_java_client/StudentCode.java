@@ -22,10 +22,10 @@ public class StudentCode {
         String graphStr = client.getGraph();
         game.setGraph(graphStr);
 
-        //System.out.println(graphStr);
-        client.addAgent("{\"id\":"+9+"}");
-        String agentsStr = client.getAgents();
-        game.loadAgent(agentsStr);
+        System.out.println(graphStr);
+        //client.addAgent("{\"id\":"+9+"}");
+        //String agentsStr = client.getAgents();
+        //game.loadAgent(client.getAgents());
         //System.out.println(client.getAgents());
 
         //System.out.println(agentsStr);
@@ -37,10 +37,11 @@ public class StudentCode {
         //System.out.println(isRunningStr);
         //System.out.println(client.getInfo());
         int startnode = game.getAlgoGraph().center().getKey();
-        System.out.println(client.addAgent("{\"id\":"+startnode+"}"));
-        System.out.println(client.addAgent("{\"id\":"+startnode+"}"));
-        System.out.println(client.addAgent("{\"id\":"+startnode+"}"));
-        runGui gameGui = new runGui(game);
+        int amountAgent = game.updateAmountAgent(client.getInfo());
+        for (int i = 0; i < amountAgent; i++) {
+            client.addAgent("{\"id\":"+startnode+"}");
+        }
+        runGui gameGui = new runGui(game,client.timeToEnd(),client.getInfo());
         client.start();
         //client.login("208483008");
         int time=0;
@@ -53,7 +54,8 @@ public class StudentCode {
                 client.move();
             }
 
-            gameGui.update(game);
+            gameGui.update(game,client.timeToEnd(),client.getInfo());
+            System.out.println(client.getInfo());
 
             game.updatePkemons(client.getPokemons());
             game.updateAgent(client.getAgents());
@@ -71,7 +73,7 @@ public class StudentCode {
 
             //System.out.println(client.getAgents());
 
-            System.out.println(client.timeToEnd());
+            //System.out.println(client.timeToEnd());
 
             //Scanner keyboard = new Scanner(System.in);
             //System.out.println("enter the next dest: ");
@@ -87,9 +89,9 @@ public class StudentCode {
                 }
             }
 
-//            if (game.stopOrNot){
-//                client.stop();
-//            }
+            if (game.stopOrNot){
+                client.stop();
+            }
         }
     }
 }
