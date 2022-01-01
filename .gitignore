@@ -24,3 +24,7 @@ hs_err_pid*
 
 #added by almog
 .idea
+
+#added by barak
+out
+out/
