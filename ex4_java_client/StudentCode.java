@@ -27,6 +27,8 @@ public class StudentCode {
         runGui gameGui = new runGui(game,client.timeToEnd(),client.getInfo());
         client.start();
         int time=0;
+
+
         while (client.isRunning().equals("true")) {
             if (time == 0){
                 time = Integer.parseInt(client.timeToEnd());
@@ -35,8 +37,6 @@ public class StudentCode {
                 time= Integer.parseInt(client.timeToEnd());
                 client.move();
             }
-            System.out.println(client.timeToEnd());
-            System.out.println(client.isRunning());
             gameGui.update(game,client.timeToEnd(),client.getInfo());
             game.updatePkemons(client.getPokemons());
             game.updateAgent(client.getAgents());

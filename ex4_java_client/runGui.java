@@ -61,20 +61,9 @@ public class runGui implements ActionListener {
         frame.setLayout(new FlowLayout());//controls the size of things that we are adding(button)
 
         frame.getContentPane().setBackground(Color.white);//change the color of background
-
-
     }
-    public void upateScreenSize(){
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        //TimeScore.setSize(dim.width,100);
-        TimeScore.setBounds(0,5,dim.width,100);
-        if(frame.getWidth()>900) {
-            AreaScore.setBounds(0 + frame.getWidth() / 10, 20, 350, 40);
-            AreaTime.setBounds(0 + (frame.getWidth() / 10) * 4, 20, 350, 40);
-            stop.setBounds(frame.getWidth() - 100, 20, 100, 50);
-        }
 
-    }
+
     public void setButtonStop(){
         stop = new JButton("Stop");
         stop.addActionListener(this);
@@ -108,9 +97,9 @@ public class runGui implements ActionListener {
         TimeScore.setBackground(Color.darkGray);
         this.setButtonStop();
         frame.add(TimeScore);
-
-
     }
+
+
     public void update(GameData game,String time,String score){
         this.graph = game.getAlgoGraph();
         this.pokemons = game.getPokemons();
@@ -119,14 +108,13 @@ public class runGui implements ActionListener {
         int Time=this.updateTime(time);
         this.AreaScore.setText("Score :" + Score);
         this.AreaTime.setText("Time to end :"+Time);
-        upateScreenSize();
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        TimeScore.setBounds(0,5,The_paint.getWidth(),100);
         if(frame.getWidth()>900) {
-            AreaScore.setBounds(0 + frame.getWidth() / 10, 20, 350, 40);
-            AreaTime.setBounds(0 + (frame.getWidth() / 10) * 4, 20, 350, 40);
+            AreaScore.setBounds(1 + (frame.getWidth() / 10), 20, 300, 40);
+            AreaTime.setBounds(1 + (frame.getWidth() / 10) * 4, 20, 400, 40);
             stop.setBounds(frame.getWidth() - 100, 20, 100, 50);
         }
-        The_paint.updateScreenSize(dim.width);
+        The_paint.setBounds(0,100,frame.getWidth(),frame.getHeight()-135);
         frame.repaint();
     }
 

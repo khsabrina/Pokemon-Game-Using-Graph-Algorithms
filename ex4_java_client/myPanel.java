@@ -22,12 +22,11 @@ public class myPanel extends JPanel {
     private double xMaxNew;
     private double yMaxNew;
 
-
     public myPanel(GameData game) {
         this.game = game;
         scalingsize();
-        this.setPreferredSize(new Dimension(900, 700));
-        this.setBounds(0,100,900,700);
+        this.setPreferredSize(new Dimension(900, 750));
+        //this.setBounds(0,100,900,700);
         try {
             imageAgent = ImageIO.read(new File("ex4_java_client/images/pokemonBall.png"));
             imagePok1= ImageIO.read(new File("ex4_java_client/images/Pokemon3.png"));
@@ -35,14 +34,10 @@ public class myPanel extends JPanel {
         } catch (IOException ex) {
             System.out.println("Didn't succeed to open the image");
         }
-
-
         repaint();
     }
 
     private void scalingsize(){
-        this.getWidth();
-        this.getHeight();
         xMinNew = Integer.MAX_VALUE;
         yMinNew = Integer.MAX_VALUE;
         xMaxNew = Integer.MIN_VALUE;
@@ -56,20 +51,19 @@ public class myPanel extends JPanel {
             yMaxNew = Math.max(node.getLocation().y(),yMaxNew);
         }
     }
+
+
     private int getXScale(geoLocation pos){
-        return  250 + (int) (((pos.x() - xMinNew)*800/(xMaxNew-xMinNew)));
-    }
-    public void updateScreenSize(int width){
-        this.setPreferredSize(new Dimension(width, 700));
+        return (int) ((((pos.x() - xMinNew)/(xMaxNew-xMinNew))*this.getWidth()*0.9)+(0.05*this.getWidth()));
     }
 
+
     private int getYScale(geoLocation pos) {
-        return 25+ (int) (((pos.y() - yMinNew)*500/(yMaxNew-yMinNew)));
+        return (int) ((((pos.y() - yMinNew)*this.getHeight()/(yMaxNew-yMinNew))*0.9)+(0.05*this.getHeight()));
     }
 
     @Override
     public void paint(Graphics g) {
-        scalingsize();
         super.paint(g);
         Graphics2D g1 = (Graphics2D) g;
         Iterator<Node> currIter = this.game.getAlgoGraph().getGraph().nodeIter();
@@ -78,9 +72,7 @@ public class myPanel extends JPanel {
             g.setColor(Color.BLUE);
             g.fillOval(getXScale(currNode.getLocation()), getYScale(currNode.getLocation()), 15, 15);//We need to do the scaling right!
             g.drawString(currNode.getKey() + "", getXScale(currNode.getLocation()), getYScale(currNode.getLocation()));
-
         }
-
         Iterator<Edge> Edges = this.game.getAlgoGraph().getGraph().edgeIter();
         while (Edges.hasNext()) {
             Edge currEdge = Edges.next();
@@ -100,10 +92,8 @@ public class myPanel extends JPanel {
                 g.drawImage(imagePok2, getXScale(pokemon.getLocation()) - 8, getYScale(pokemon.getLocation()) - 8, 35, 35, null);
             }
         }
-        //g.setColor(Color.BLUE);
         for (int i = 0; i < this.game.getAgents().size(); i++) {
             Agent agent = this.game.getAgents().get(i);
-            //g.fillOval(getXScale(agent.getLocation()), getYScale(agent.getLocation()), 25, 25);
             g.drawImage(imageAgent, getXScale(agent.getLocation())-8,getYScale(agent.getLocation())-8,35,35,null);
         }
     }
@@ -119,9 +109,7 @@ public class myPanel extends JPanel {
         at.concatenate(AffineTransform.getRotateInstance(angle));
         g.transform(at);
 
-        // Draw horizontal arrow starting in (0, 0)
         g.drawLine(0, 0, len, 0);
-        g.fillPolygon(new int[]{len, len - 5, len - 5, len},
-                new int[]{0, -5, 5, 0}, 4);
+        g.fillPolygon(new int[]{len, len - 5, len - 5, len}, new int[]{0, -5, 5, 0}, 4);
     }
 }
