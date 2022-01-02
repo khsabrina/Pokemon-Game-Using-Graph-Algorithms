@@ -27,6 +27,7 @@ public class myPanel extends JPanel {
         this.game = game;
         scalingsize();
         this.setPreferredSize(new Dimension(900, 700));
+        this.setBounds(0,100,900,700);
         try {
             imageAgent = ImageIO.read(new File("ex4_java_client/images/pokemonBall.png"));
             imagePok1= ImageIO.read(new File("ex4_java_client/images/Pokemon3.png"));
@@ -40,6 +41,8 @@ public class myPanel extends JPanel {
     }
 
     private void scalingsize(){
+        this.getWidth();
+        this.getHeight();
         xMinNew = Integer.MAX_VALUE;
         yMinNew = Integer.MAX_VALUE;
         xMaxNew = Integer.MIN_VALUE;
@@ -59,11 +62,14 @@ public class myPanel extends JPanel {
         repaint();
     }
     private int getXScale(geoLocation pos){
-        return  (int) (((pos.x() - xMinNew)*800/(xMaxNew-xMinNew)));
+        return  250 + (int) (((pos.x() - xMinNew)*800/(xMaxNew-xMinNew)));
+    }
+    public void updateScreenSize(int width){
+        this.setPreferredSize(new Dimension(width, 700));
     }
 
     private int getYScale(geoLocation pos) {
-        return (int) (((pos.y() - yMinNew)*500/(yMaxNew-yMinNew)));
+        return 25+ (int) (((pos.y() - yMinNew)*500/(yMaxNew-yMinNew)));
     }
 
     @Override

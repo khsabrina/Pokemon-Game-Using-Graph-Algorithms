@@ -24,7 +24,7 @@ public class runGui implements ActionListener {
     JLabel AreaTime;
     myPanel The_paint;
     JLabel AreaScore;
-    JPanel timeScore;
+    JPanel TimeScore;
     JButton stop;
     int Score;
 
@@ -34,35 +34,8 @@ public class runGui implements ActionListener {
         this.graph = game.getAlgoGraph();
         this.pokemons = game.getPokemons();
         this.agents = game.getAgents();
-        stop = new JButton("Stop");
-        stop.addActionListener(this);
-        stop.setHorizontalTextPosition(JButton.CENTER);
-        stop.setFont(new Font("MV Boli",Font.PLAIN,10));
-        stop.setForeground(Color.blue);
         frame = new JFrame(); //creates a frame
-        timeScore = new JPanel();
-        timeScore.setLayout(new FlowLayout(SwingConstants.RIGHT));
-        AreaScore = new JLabel();
-        AreaTime=new JLabel();
-        //AreaScore.setBounds(200,200,50,50);
-        int Time=this.updateTime(time);
-        int Score= this.updateScore(score);
-        AreaTime.setText("Time to end :"+Time);
-        AreaScore.setText("Score :" + Score+"        ");
-        AreaScore.setVerticalTextPosition(JLabel.BOTTOM);
-        AreaTime.setVerticalTextPosition(JLabel.CENTER);
-        AreaTime.setForeground(Color.cyan);
-        AreaScore.setForeground(Color.cyan);
-        AreaScore.setFont(new Font("MV Boli",Font.PLAIN,40));
-        AreaTime.setFont(new Font("MV Boli",Font.PLAIN,40));
-        timeScore.add(AreaScore);
-        timeScore.add(AreaTime);
-        timeScore.add(stop,BorderLayout.SOUTH);
-        timeScore.add(stop,BorderLayout.BEFORE_LINE_BEGINS);
-
-
-
-
+        this.setScoreTime(time,score);
         //opening the GUI
         frame.setTitle("my GUI"); //
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//exit the app
@@ -72,15 +45,12 @@ public class runGui implements ActionListener {
         //frame.setSize(1000,1000); //sets the size of the window
         this.The_paint = new myPanel(game);
         //this.The_paint.setSize(Toolkit.getDefaultToolkit().getScreenSize()); for resize
-        timeScore.setBackground(Color.darkGray);
-        timeScore.setPreferredSize(new Dimension(900,100));
         frame.getContentPane().addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
                 //The_paint.updateWindow(Toolkit.getDefaultToolkit().getScreenSize().width,Toolkit.getDefaultToolkit().getScreenSize().width);
                 //The_paint.updateWindow(componentEvent.getComponent().getWidth(),componentEvent.getComponent().getHeight());
             }
         });
-        frame.add(timeScore);
         frame.add(The_paint);
         frame.repaint();
         //pack is for the frame to be just on the right size
@@ -93,6 +63,52 @@ public class runGui implements ActionListener {
         frame.getContentPane().setBackground(Color.white);//change the color of background
 
 
+    }
+    public void upateScreenSize(){
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        //TimeScore.setSize(dim.width,100);
+        TimeScore.setBounds(0,5,dim.width,100);
+        if(frame.getWidth()>900) {
+            AreaScore.setBounds(0 + frame.getWidth() / 10, 20, 350, 40);
+            AreaTime.setBounds(0 + (frame.getWidth() / 10) * 4, 20, 350, 40);
+            stop.setBounds(frame.getWidth() - 100, 20, 100, 50);
+        }
+
+    }
+    public void setButtonStop(){
+        stop = new JButton("Stop");
+        stop.addActionListener(this);
+        stop.setHorizontalTextPosition(JButton.CENTER);
+        stop.setSize(20,20);
+        stop.setFont(new Font("MV Boli",Font.PLAIN,20));
+        stop.setForeground(Color.blue);
+        stop.setBounds(TimeScore.getWidth()-100,20,100,50);
+        TimeScore.add(stop,BorderLayout.AFTER_LINE_ENDS);
+        //TimeScore.add(stop,BorderLayout.EAST);
+    }
+    public void setScoreTime(String time,String score){
+        TimeScore = new JPanel();
+        //TimeScore.setLayout(new FlowLayout(SwingConstants.RIGHT));
+        TimeScore.setLayout(null);
+        AreaScore = new JLabel();
+        AreaTime=new JLabel();
+        int Time=this.updateTime(time);
+        int Score= this.updateScore(score);
+        AreaTime.setText("Time to end :"+Time);
+        AreaScore.setText("Score :" + Score);
+        AreaTime.setForeground(Color.cyan);
+        AreaScore.setForeground(Color.cyan);
+        TimeScore.setPreferredSize(new Dimension(900,100));
+        AreaScore.setBounds(0, 20,350,40);
+        AreaTime.setBounds(350,20,350,40);
+        AreaScore.setFont(new Font("MV Boli",Font.PLAIN,40));
+        AreaTime.setFont(new Font("MV Boli",Font.PLAIN,40));
+        TimeScore.add(AreaScore);
+        TimeScore.add(AreaTime);
+        TimeScore.setBackground(Color.darkGray);
+        this.setButtonStop();
+        frame.add(TimeScore);
+
 
     }
     public void update(GameData game,String time,String score){
@@ -101,8 +117,16 @@ public class runGui implements ActionListener {
         this.agents = game.getAgents();
         Score= this.updateScore(score);
         int Time=this.updateTime(time);
-        this.AreaScore.setText("Score :" + Score+"        ");
-        this.AreaTime.setText("Time to end :"+Time+"          ");
+        this.AreaScore.setText("Score :" + Score);
+        this.AreaTime.setText("Time to end :"+Time);
+        upateScreenSize();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        if(frame.getWidth()>900) {
+            AreaScore.setBounds(0 + frame.getWidth() / 10, 20, 350, 40);
+            AreaTime.setBounds(0 + (frame.getWidth() / 10) * 4, 20, 350, 40);
+            stop.setBounds(frame.getWidth() - 100, 20, 100, 50);
+        }
+        The_paint.updateScreenSize(dim.width);
         frame.repaint();
     }
 
@@ -159,5 +183,24 @@ public class runGui implements ActionListener {
         frame2.setLayout(new FlowLayout());
         frame2.setVisible(true);
         frame2.pack();
+    }
+    public void FinishWindow(){
+        JFrame frame2 = new JFrame(); //creating a new window for the input from the user
+        JLabel label = new JLabel();
+        JLabel label2 = new JLabel();
+        label2.setText("Game Over");
+        label.setText("Your score is: " + this.Score);
+        label.setForeground(Color.BLUE);
+        label.setFont(new Font("MV Boli",Font.PLAIN,40));
+        label2.setForeground(Color.BLUE);
+        label2.setFont(new Font("MV Boli",Font.PLAIN,40));
+        label.setBounds(10,50,400,50);
+        label2.setBounds(10,5,300,50);
+        frame2.add(label2);
+        frame2.add(label);
+        frame2.setSize(450,150);
+        frame2.setLayout(null);
+        frame2.setVisible(true);
+        //frame2.pack();
     }
 }

@@ -1,4 +1,4 @@
-package ex4_java_client.Tests;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import ex4_java_client.elements.*;
