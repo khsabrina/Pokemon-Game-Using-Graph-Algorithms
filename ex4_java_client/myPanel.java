@@ -56,11 +56,6 @@ public class myPanel extends JPanel {
             yMaxNew = Math.max(node.getLocation().y(),yMaxNew);
         }
     }
-    public void updateWindow(int w, int h){
-        this.setPreferredSize(new Dimension(w,h));
-        scalingsize();
-        repaint();
-    }
     private int getXScale(geoLocation pos){
         return  250 + (int) (((pos.x() - xMinNew)*800/(xMaxNew-xMinNew)));
     }
