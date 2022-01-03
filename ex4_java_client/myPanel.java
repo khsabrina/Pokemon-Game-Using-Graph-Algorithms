@@ -21,11 +21,18 @@ public class myPanel extends JPanel {
     private double yMinNew;
     private double xMaxNew;
     private double yMaxNew;
+    JLabel AreaTime;
+    myPanel The_paint;
+    JLabel AreaScore;
+    JPanel TimeScore;
+    JButton stop;
+    int Score;
+    int Time;
 
     public myPanel(GameData game) {
         this.game = game;
         scalingsize();
-        this.setPreferredSize(new Dimension(900, 750));
+        this.setPreferredSize(new Dimension(900, 900));
         //this.setBounds(0,100,900,700);
         try {
             imageAgent = ImageIO.read(new File("ex4_java_client/images/pokemonBall.png"));
@@ -59,7 +66,7 @@ public class myPanel extends JPanel {
 
 
     private int getYScale(geoLocation pos) {
-        return (int) ((((pos.y() - yMinNew)*this.getHeight()/(yMaxNew-yMinNew))*0.9)+(0.05*this.getHeight()));
+        return (int) ((((pos.y() - yMinNew)*(this.getHeight()-100)/(yMaxNew-yMinNew))*0.9)+(0.05*(this.getHeight()-100)));
     }
 
     @Override
@@ -112,4 +119,6 @@ public class myPanel extends JPanel {
         g.drawLine(0, 0, len, 0);
         g.fillPolygon(new int[]{len, len - 5, len - 5, len}, new int[]{0, -5, 5, 0}, 4);
     }
+
+
 }

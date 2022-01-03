@@ -27,6 +27,7 @@ public class runGui implements ActionListener {
     JPanel TimeScore;
     JButton stop;
     int Score;
+    int Time;
 
 
     public runGui(GameData game ,String time,String score) {
@@ -71,7 +72,7 @@ public class runGui implements ActionListener {
         stop.setSize(20,20);
         stop.setFont(new Font("MV Boli",Font.PLAIN,20));
         stop.setForeground(Color.blue);
-        stop.setBounds(TimeScore.getWidth()-100,20,100,50);
+        stop.setBounds(800,20,100,40);
         TimeScore.add(stop,BorderLayout.AFTER_LINE_ENDS);
         //TimeScore.add(stop,BorderLayout.EAST);
     }
@@ -81,15 +82,15 @@ public class runGui implements ActionListener {
         TimeScore.setLayout(null);
         AreaScore = new JLabel();
         AreaTime=new JLabel();
-        int Time=this.updateTime(time);
-        int Score= this.updateScore(score);
-        AreaTime.setText("Time to end :"+Time);
-        AreaScore.setText("Score :" + Score);
+        Time=this.updateTime(time);
+        Score= this.updateScore(score);
         AreaTime.setForeground(Color.cyan);
         AreaScore.setForeground(Color.cyan);
         TimeScore.setPreferredSize(new Dimension(900,100));
-        AreaScore.setBounds(0, 20,350,40);
-        AreaTime.setBounds(350,20,350,40);
+        AreaScore.setBounds(5, 20,350,40);
+        AreaTime.setBounds(370,20,400,40);
+        AreaTime.setText("Time to end :"+Time);
+        AreaScore.setText("Score :" + Score);
         AreaScore.setFont(new Font("MV Boli",Font.PLAIN,40));
         AreaTime.setFont(new Font("MV Boli",Font.PLAIN,40));
         TimeScore.add(AreaScore);
@@ -105,22 +106,30 @@ public class runGui implements ActionListener {
         this.pokemons = game.getPokemons();
         this.agents = game.getAgents();
         Score= this.updateScore(score);
-        int Time=this.updateTime(time);
+        Time=this.updateTime(time);
+        TimeScore.setBounds(0,0,frame.getWidth(),100);
+        The_paint.setBounds(0,100,frame.getWidth(),frame.getHeight()-135);
+        if (frame.getWidth() > 900) {
+                // AreaScore.setBounds((frame.getWidth() / 10)-20, 20, 300, 40);
+                // AreaTime.setBounds((frame.getWidth() / 10) * 4 + 40, 20, 400, 40);
+                AreaScore.setLocation((frame.getWidth() / 10) - 20, 20);
+                AreaTime.setLocation((frame.getWidth() / 10) * 4 + 40, 20);
+                //stop.setBounds(frame.getWidth() - 80, 20, 80, 50);
+                stop.setLocation(frame.getWidth() - 100, 20);
+        }
+
         this.AreaScore.setText("Score :" + Score);
         this.AreaTime.setText("Time to end :"+Time);
-        TimeScore.setBounds(0,5,The_paint.getWidth(),100);
-        if(frame.getWidth()>900) {
-            AreaScore.setBounds(1 + (frame.getWidth() / 10), 20, 300, 40);
-            AreaTime.setBounds(1 + (frame.getWidth() / 10) * 4, 20, 400, 40);
-            stop.setBounds(frame.getWidth() - 100, 20, 100, 50);
-        }
-        The_paint.setBounds(0,100,frame.getWidth(),frame.getHeight()-135);
         frame.repaint();
+        //frame.pack();
+
     }
 
 
 
+    public void paint(Graphics g) {
 
+    }
     private int updateScore(String json){
         int ans =0;
         try {
