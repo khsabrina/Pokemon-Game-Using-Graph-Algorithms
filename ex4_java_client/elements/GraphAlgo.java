@@ -83,7 +83,7 @@ public class GraphAlgo {
         return here;
     }
 
-    //Checking if the self DGWA is composed of only one component
+    //Checking if the self DWGA is composed of only one component
     public boolean isConnected() {
         Iterator<Node> iterator = this.graph.nodeIter();
         while (iterator.hasNext()) {
@@ -98,7 +98,7 @@ public class GraphAlgo {
         return true;
     }
 
-    //Checking what is the weght of the shortest path between two nodes
+    //Checking what is the weight of the shortest path between two nodes
     public double shortestPathDist(int src, int dest) {
         HashMap<Integer, Double> routes = routes(src);
         return routes.get(dest);
@@ -170,7 +170,7 @@ public class GraphAlgo {
         return returnList;
     }
 
-    //return the node thats is the center of the graph (footnote - center node is the node which the max shortest path to all the other nodes is minimized.)
+    //return the node that is the center of the graph (footnote - center node is the node which the max the shortest path to all the other nodes is minimized.)
     public Node center() {
         Node ans = null;
         double min = Double.MAX_VALUE;

@@ -1,10 +1,10 @@
 package ex4_java_client; /**
  * @author AchiyaZigi
- * @since 0.0
  * @version 1.0
  * OOP Ex4 - Do NOT change this class! as it is the server "api"
- * 
+ * @since 0.0
  */
+
 import java.io.*;
 import java.net.*;
 
@@ -17,7 +17,7 @@ public class Client {
      *
      * use with ip='127.0.0.1' , port=6666
      * to start a new connection to the game server
-     * 
+     *
      * @param ip
      * @param port
      * @throws UnknownHostException
@@ -38,7 +38,7 @@ public class Client {
 
     /**
      * use this function to signal end of comunication with the server.
-     * 
+     *
      * @throws IOException
      */
     public void stopConnection() throws IOException {
@@ -49,9 +49,9 @@ public class Client {
     }
 
     /**
-     * 
+     *
      * returns: json str of agents. for example:
-     * 
+     *
      * <pre>
      * {
      *     "Agents":[
@@ -69,7 +69,7 @@ public class Client {
      *     ]
      * }
      * </pre>
-     * 
+     *
      * @return json str of agents
      */
     public String getAgents() {
@@ -84,13 +84,13 @@ public class Client {
     }
 
     /**
-     * 
+     *
      * @param jsonOfNode should be in this format:
-     * 
+     *
      *                   <pre>
      * '{"id":0}'
      *                   </pre>
-     * 
+     *
      *                   (replace 0 with the desired starting node for the agent.)
      * @return 'true' (as str) iff the agent has been added succesfuly
      */
@@ -132,9 +132,9 @@ public class Client {
      * then move() won't be affected by this invalid "next_node_id" choice.
      * </p>
      * </html>
-     * 
+     *
      * @param jsonAgentAndNode next_agent_node_json should be in format:
-     * 
+     *
      *                         <pre>
      * '{"agent_id":0, "next_node_id":1}'.
      *                         </pre>
@@ -178,7 +178,7 @@ public class Client {
 
     /**
      * returns the graph as json str. for example:
-     * 
+     *
      * <pre>
      * {
      *     "Edges":[
@@ -209,7 +209,7 @@ public class Client {
      *     ]
      * }
      * </pre>
-     * 
+     *
      * @return the graph as json str
      */
     public String getGraph() {
@@ -225,7 +225,7 @@ public class Client {
 
     /**
      * enter your id as str to login and upload your score to the web server
-     * 
+     *
      * @param id
      */
     public void login(String id) {
@@ -235,7 +235,7 @@ public class Client {
             if (res1.equals("getId")) {
                 String res2 = sendMessage(id);
             } else {
-                throw new IOException("coudn't comunicate with server");
+                throw new IOException("couldn't communicate with server");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -245,7 +245,7 @@ public class Client {
     /**
      * returns the current pokemons state as json str.
      * example:
-     * 
+     *
      * <pre>
      * {
      *     "Pokemons":[
@@ -259,10 +259,10 @@ public class Client {
      *     ]
      * }
      * </pre>
-     * 
+     *
      * @return returns the current pokemons state as json str.
      *         for pokemon lying on edge (src,dest), then:
-     * 
+     *
      *         <pre>
      * src < dest => type > 0
      * dest < src => type < 0
@@ -279,7 +279,7 @@ public class Client {
     }
 
     /**
-     * 
+     *
      * @return time to end in mili-seconds str. for example: '29996'
      */
     public String timeToEnd() {
@@ -293,7 +293,7 @@ public class Client {
     }
 
     /**
-     * 
+     *
      * @return 'true' (as str) if the game is still running, else: returns 'false'
      *         (also str)
      */
@@ -310,7 +310,7 @@ public class Client {
 
     /**
      * returns the current game info. for example:
-     * 
+     *
      * <pre>
      * {
      *     "GameServer":{
@@ -326,7 +326,7 @@ public class Client {
      *     }
      * }
      * </pre>
-     * 
+     *
      * @return the current game info.
      */
     public String getInfo() {

@@ -36,37 +36,37 @@ public class myPanel extends JPanel {
         //this.setBounds(0,100,900,700);
         try {
             imageAgent = ImageIO.read(new File("ex4_java_client/images/pokemonBall.png"));
-            imagePok1= ImageIO.read(new File("ex4_java_client/images/Pokemon3.png"));
-            imagePok2= ImageIO.read(new File("ex4_java_client/images/Pokemon2.png"));
+            imagePok1 = ImageIO.read(new File("ex4_java_client/images/Pokemon3.png"));
+            imagePok2 = ImageIO.read(new File("ex4_java_client/images/Pokemon2.png"));
         } catch (IOException ex) {
             System.out.println("Didn't succeed to open the image");
         }
         repaint();
     }
 
-    private void scalingsize(){
+    private void scalingsize() {
         xMinNew = Integer.MAX_VALUE;
         yMinNew = Integer.MAX_VALUE;
         xMaxNew = Integer.MIN_VALUE;
         yMaxNew = Integer.MIN_VALUE;
         Iterator<Node> iterator = this.game.getAlgoGraph().getGraph().nodeIter();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             Node node = iterator.next();
-            xMinNew = Math.min(node.getLocation().x(),xMinNew);
-            yMinNew = Math.min(node.getLocation().y(),yMinNew);
-            xMaxNew = Math.max(node.getLocation().x(),xMaxNew);
-            yMaxNew = Math.max(node.getLocation().y(),yMaxNew);
+            xMinNew = Math.min(node.getLocation().x(), xMinNew);
+            yMinNew = Math.min(node.getLocation().y(), yMinNew);
+            xMaxNew = Math.max(node.getLocation().x(), xMaxNew);
+            yMaxNew = Math.max(node.getLocation().y(), yMaxNew);
         }
     }
 
 
-    private int getXScale(geoLocation pos){
-        return (int) ((((pos.x() - xMinNew)/(xMaxNew-xMinNew))*this.getWidth()*0.9)+(0.05*this.getWidth()));
+    private int getXScale(geoLocation pos) {
+        return (int) ((((pos.x() - xMinNew) / (xMaxNew - xMinNew)) * this.getWidth() * 0.9) + (0.05 * this.getWidth()));
     }
 
 
     private int getYScale(geoLocation pos) {
-        return (int) ((((pos.y() - yMinNew)*(this.getHeight()-100)/(yMaxNew-yMinNew))*0.9)+(0.05*(this.getHeight()-100)));
+        return (int) ((((pos.y() - yMinNew) * (this.getHeight() - 100) / (yMaxNew - yMinNew)) * 0.9) + (0.05 * (this.getHeight() - 100)));
     }
 
     @Override
@@ -83,25 +83,24 @@ public class myPanel extends JPanel {
         Iterator<Edge> Edges = this.game.getAlgoGraph().getGraph().edgeIter();
         while (Edges.hasNext()) {
             Edge currEdge = Edges.next();
-                Node src = this.game.getAlgoGraph().getGraph().getNode(currEdge.getSrc());
-                Node dest = this.game.getAlgoGraph().getGraph().getNode(currEdge.getDest());
-                g.setColor(Color.BLACK);
-                g.drawLine(getXScale(src.getLocation()) + 8, getYScale(src.getLocation()) + 8, getXScale(dest.getLocation()) + 8, getYScale(dest.getLocation()) + 8);
-                drawArrow(g1, getXScale(src.getLocation()) + 8, getYScale(src.getLocation()) + 8, getXScale(dest.getLocation()) + 8, getYScale(dest.getLocation()) + 8);
+            Node src = this.game.getAlgoGraph().getGraph().getNode(currEdge.getSrc());
+            Node dest = this.game.getAlgoGraph().getGraph().getNode(currEdge.getDest());
+            g.setColor(Color.BLACK);
+            g.drawLine(getXScale(src.getLocation()) + 8, getYScale(src.getLocation()) + 8, getXScale(dest.getLocation()) + 8, getYScale(dest.getLocation()) + 8);
+            drawArrow(g1, getXScale(src.getLocation()) + 8, getYScale(src.getLocation()) + 8, getXScale(dest.getLocation()) + 8, getYScale(dest.getLocation()) + 8);
         }
         g.setColor(Color.YELLOW);
         for (int i = 0; i < this.game.getPokemons().size(); i++) {
             Pokemon pokemon = this.game.getPokemons().get(i);
-            if(pokemon.getType()>0) {
+            if (pokemon.getType() > 0) {
                 g.drawImage(imagePok1, getXScale(pokemon.getLocation()) - 8, getYScale(pokemon.getLocation()) - 8, 40, 40, null);
-            }
-            else {
+            } else {
                 g.drawImage(imagePok2, getXScale(pokemon.getLocation()) - 8, getYScale(pokemon.getLocation()) - 8, 35, 35, null);
             }
         }
         for (int i = 0; i < this.game.getAgents().size(); i++) {
             Agent agent = this.game.getAgents().get(i);
-            g.drawImage(imageAgent, getXScale(agent.getLocation())-8,getYScale(agent.getLocation())-8,35,35,null);
+            g.drawImage(imageAgent, getXScale(agent.getLocation()) - 8, getYScale(agent.getLocation()) - 8, 35, 35, null);
         }
     }
 
