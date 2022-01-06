@@ -18,12 +18,14 @@ public class StudentCode {
         String graphStr = client.getGraph();
         game.setGraph(graphStr);
         String pokemonsStr = client.getPokemons();
+//        System.out.println(pokemonsStr);
         game.loadPokemons(pokemonsStr);
         int startnode = game.getAlgoGraph().center().getKey();
         int amountAgent = game.updateAmountAgent(client.getInfo());
         for (int i = 0; i < amountAgent; i++) {
             client.addAgent("{\"id\":"+startnode+"}");
         }
+//        System.out.println(client.getAgents());
         runGui gameGui = new runGui(game,client.timeToEnd(),client.getInfo());
         client.start();
         int time=0;
