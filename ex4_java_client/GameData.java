@@ -74,7 +74,7 @@ public class GameData {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 
