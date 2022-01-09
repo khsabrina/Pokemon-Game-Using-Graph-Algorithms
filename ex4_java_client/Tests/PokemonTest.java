@@ -38,7 +38,10 @@ class PokemonTest {
     @Test
     void getEdge() {
         Edge check = kh.getEdge();
-//        assertEquals(check,new Edge(1, 2, 2.1));
+        Edge answer = new Edge(1,2,2.1);
+        assertEquals(check.getSrc(),answer.getSrc());
+        assertEquals(check.getDest(),answer.getDest());
+        assertEquals(check.getWeight(),answer.getWeight());
     }
 
     @Test
