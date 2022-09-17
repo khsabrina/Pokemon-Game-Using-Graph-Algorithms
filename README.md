@@ -6,7 +6,7 @@
 
 ## preface
 
-This is a readme for our oop-Ex2- planing and design directed weighted graph. Please follow those instructions:
+This is a readme for our oop-Ex4- planing and design directed weighted graph. Please follow those instructions:
 
 1. In section "[2. About this project](https://github.com/BarakShachar/OOP-Ex4/wiki/2.-About-this-project)" you could find an explanation about this project.
 2. In section "[3. Implementation](https://github.com/BarakShachar/OOP-Ex4/wiki/3.-Implementation)" you can take a deeper look on the algorithms we actualized
